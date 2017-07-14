@@ -7,10 +7,8 @@ var app = angular.module('app', ['ngRoute'])
   .controller('categoriesController', function($scope, dataService){
 
     dataService.getCategories(function(response){
-      console.log(response.data);
-      let categoriesArray = response.data
-      return categoriesArray;
-    })
+      $scope.categoriesArray = response.data;
+    });
   })
 
   .service('dataService', function($http){
