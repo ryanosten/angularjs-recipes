@@ -13,7 +13,7 @@
     <div class="flush-right">
       <!-- TODO Add a directive to this button in order to handle
         when the user clicks to add a new recipe. -->
-      <button>+ Add Recipe</button>
+      <a href="/#/add"><button>+ Add Recipe</button></a>
     </div>
   </div>
 </div>
@@ -21,7 +21,7 @@
 
 <!-- TODO Add a directive to this div element so that it only displays
   when there are no recipes to display. -->
-<div ng-hide="recipesByCategory.length" class="grid-100 row">
+<div ng-hide="recipesFiltered.length" class="grid-100 row">
   <div class="grid-70">
     <p>No recipes found!</p>
   </div>
@@ -30,14 +30,15 @@
 <!-- TODO Add a directive to this div element so that it repeats
   for each recipe to display. Also, add a directive to this div element
   so that it only displays when there are recipes to display. -->
-<div ng-show="recipesByCategory.length" ng-repeat="recipe in recipesByCategory" class="grid-100 row addHover">
+<div ng-show="recipesFiltered.length" ng-repeat="recipe in recipesFiltered" class="grid-100 row addHover">
   <!-- TODO Replace this anchor element's href attribute with a
     directive so that you can route the user to the Recipe Detail
     screen when they click on a row. -->
   <a href="#">
     <div class="grid-70">
-      <p>
-        <h2>{{recipe.name}}</h2>
+      <p>{{recipe.name}}
+        <!--
+        <h3>{{recipe.name}}</h3>
         Description: {{recipe.description}}
         <br/>
         Category: {{recipe.category}}
@@ -46,17 +47,17 @@
         <br/>
         Cook Time: {{recipe.cookTime}}
         <br/>
-        <h4>Ingredients:</h4>
+        <h4>Ingredients</h4>
         <div ng-repeat="ingredient in recipe.ingredients">
           {{ingredient.foodItem}}
           {{ingredient.condition}}
           {{ingredient.amount}}
         </div>
-        <h4>Steps:</h4>
+        <h4>Steps</h4>
         <div ng-repeat="step in recipe.steps">
           {{step.description}}
         </div>
-
+        -->
 
         <!-- TODO Add binding expressions here in order to
           display information about the recipe. -->
@@ -70,7 +71,7 @@
           <!-- TODO Replace this anchor element's href attribute with a
             directive so that you can route the user to the Recipe Detail
             screen when they click on the 'Edit' link. -->
-          <a href="#"> <img src="images/edit.svg" height="12px"> Edit </a>
+          <a href="/#!/edit/{{recipe._id}}" ng-click="viewRecipe(recipe._id)"> <img src="images/edit.svg" height="12px"> Edit </a>
           <!-- TODO Add a directive to this anchor element so that you can
             delete the recipe when the user clicks on the 'Delete' link. -->
           <a class="no-action-link"> <img src="images/delete.svg" height="12px"> Delete </a>
