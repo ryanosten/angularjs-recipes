@@ -1,6 +1,6 @@
 var app = angular.module('app', ['ngRoute'])
 
-  .controller('RecipesController', function($scope, dataService, $location){
+  .controller('RecipesController', function($scope, dataService){
 
     dataService.getCategories(function(response){
       $scope.categoriesArray = response.data;
@@ -27,8 +27,12 @@ var app = angular.module('app', ['ngRoute'])
   })
 
 
-  .controller('RecipeDetailController', function($scope){
+  .controller('RecipeDetailController', function($scope, $location){
 
+    let url = $location.url();
+    let id = url.split("/").pop();
+    $scope.currentRecipe = id;
+    console.log($scope.currentRecipe);
   })
 
 
