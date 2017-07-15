@@ -27,12 +27,28 @@ var app = angular.module('app', ['ngRoute'])
   })
 
 
-  .controller('RecipeDetailController', function($scope, $location){
+  .controller('RecipeDetailController', function($scope, dataService, $location){
 
+    //get param from URL and make available in scope
     let url = $location.url();
     let id = url.split("/").pop();
     $scope.currentRecipe = id;
     console.log($scope.currentRecipe);
+
+    dataService.getRecipe(id, function(response){
+      $scope.recipe = response.data;
+      console.log($scope.recipe);
+    });
+
+    dataService.getCategories(function(response){
+      $scope.categoriesArray = response.data;
+    });
+
+    dataService.getFoodItems(function(response){
+      $scope.foodItems = response.data;
+      console.log($scope.foodItems)
+    });
+
   })
 
 
@@ -48,7 +64,7 @@ var app = angular.module('app', ['ngRoute'])
         .then(callback)
       }
 
-    this.foodItems = function(callback){
+    this.getFoodItems = function(callback){
       $http.get('/api/fooditems')
         .then(callback)
     }
