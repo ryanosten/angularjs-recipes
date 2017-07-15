@@ -1,14 +1,23 @@
 var app = angular.module('app', ['ngRoute'])
 
-  .controller('RecipesController', function($scope){
-
-  })
-
-  .controller('categoriesController', function($scope, dataService){
+  .controller('RecipesController', function($scope, dataService){
 
     dataService.getCategories(function(response){
       $scope.categoriesArray = response.data;
     });
+
+    $scope.changedCategory = function(category){
+      dataService.getCategory(category, function(response){
+        $scope.recipesByCategory = response.data;
+      });
+    }
+
+    $scope.listIngredients = function(){
+      for(ingredient in recipe.ingredients){
+          console.log(ingredient.foodItem);
+      }
+    }
+
   })
 
   .service('dataService', function($http){
@@ -28,8 +37,8 @@ var app = angular.module('app', ['ngRoute'])
         .then(callback)
     }
 
-    this.getCategory = function(callback){
-      $http.get('/api/recipes?category={category}')
+    this.getCategory = function(category, callback){
+      $http.get(`/api/recipes?category=${category}`)
         .then(callback)
     }
 

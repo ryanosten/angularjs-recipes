@@ -1,11 +1,11 @@
 <div class="grid-100 row controls">
-  <div class="grid-30" ng-controller="categoriesController">
+  <div class="grid-30">
     <!-- TODO Add directives to the select elememt in order to
       populate the list with the categories from the database.
       You'll also need to add directives to handle when the user
       selects a new category so that you can refresh the recipes list. -->
-    <select>
-      <option value="">All Categories</option> 
+    <select ng-model="category.selected" ng-change="changedCategory(category.selected)">
+      <option value="">All Categories</option>
       <option ng-repeat="category in categoriesArray" value="{{category.name}}">{{category.name}}</option>
     </select>
   </div>
@@ -16,13 +16,12 @@
       <button>+ Add Recipe</button>
     </div>
   </div>
-  {{categoriesArray}}
 </div>
 <div class="clear"></div>
 
 <!-- TODO Add a directive to this div element so that it only displays
   when there are no recipes to display. -->
-<div class="grid-100 row">
+<div ng-hide="recipesByCategory.length" class="grid-100 row">
   <div class="grid-70">
     <p>No recipes found!</p>
   </div>
@@ -31,13 +30,34 @@
 <!-- TODO Add a directive to this div element so that it repeats
   for each recipe to display. Also, add a directive to this div element
   so that it only displays when there are recipes to display. -->
-<div class="grid-100 row addHover">
+<div ng-show="recipesByCategory.length" ng-repeat="recipe in recipesByCategory" class="grid-100 row addHover">
   <!-- TODO Replace this anchor element's href attribute with a
     directive so that you can route the user to the Recipe Detail
     screen when they click on a row. -->
   <a href="#">
     <div class="grid-70">
       <p>
+        <h2>{{recipe.name}}</h2>
+        Description: {{recipe.description}}
+        <br/>
+        Category: {{recipe.category}}
+        <br/>
+        Prep Time: {{recipe.prepTime}}
+        <br/>
+        Cook Time: {{recipe.cookTime}}
+        <br/>
+        <h4>Ingredients:</h4>
+        <div ng-repeat="ingredient in recipe.ingredients">
+          {{ingredient.foodItem}}
+          {{ingredient.condition}}
+          {{ingredient.amount}}
+        </div>
+        <h4>Steps:</h4>
+        <div ng-repeat="step in recipe.steps">
+          {{step.description}}
+        </div>
+
+
         <!-- TODO Add binding expressions here in order to
           display information about the recipe. -->
       </p>
