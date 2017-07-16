@@ -10,12 +10,20 @@ var app = angular.module('app', ['ngRoute'])
       dataService.getCategory(category, function(response){
         $scope.recipesFiltered = response.data;
       });
-    }
+    };
 
     dataService.getRecipes(function(response){
       $scope.recipesFiltered = response.data;
     });
 
+    $scope.delete = function(recipe){
+      let index = $scope.recipesFiltered.indexOf(recipe);
+      $scope.recipesFiltered.splice(recipe, 1);
+
+      dataService.deleteRecipe(recipe, function(response){
+          console.log(response.data);
+      });
+    };
     /*
     $scope.viewRecipe = function(id){
       dataService.getRecipe(id, function(response){
@@ -89,8 +97,8 @@ var app = angular.module('app', ['ngRoute'])
         .then(callback)
     }
 
-    this.deleteRecipe = function(callback){
-      $http.delete('/api/recipes/{id}')
+    this.deleteRecipe = function(id, callback){
+      $http.delete(`/api/recipes/${id}`)
         .then(callback)
     }
 
