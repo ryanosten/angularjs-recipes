@@ -20,9 +20,7 @@ var app = angular.module('app', ['ngRoute'])
       let index = $scope.recipesFiltered.indexOf(recipe);
       $scope.recipesFiltered.splice(recipe, 1);
 
-      dataService.deleteRecipe(recipe, function(response){
-          console.log(response.data);
-      });
+      dataService.deleteRecipe(recipe, function(response){});
     };
     /*
     $scope.viewRecipe = function(id){
@@ -37,25 +35,25 @@ var app = angular.module('app', ['ngRoute'])
 
   .controller('RecipeDetailController', function($scope, dataService, $location){
 
-    //get param from URL and make available in scope
-    let url = $location.url();
-    let id = url.split("/").pop();
-    $scope.currentRecipe = id;
-    console.log($scope.currentRecipe);
+    //controller logic for edit route
+    if($location.url() !== '/add'){
+      //get param from URL and make available in scope
+      let url = $location.url();
+      let id = url.split("/").pop();
+      $scope.currentRecipe = id;
 
-    dataService.getRecipe(id, function(response){
-      $scope.recipe = response.data;
-      console.log($scope.recipe);
-    });
+      dataService.getRecipe(id, function(response){
+        $scope.recipe = response.data;
+      });
 
-    dataService.getCategories(function(response){
-      $scope.categoriesArray = response.data;
-    });
+      dataService.getCategories(function(response){
+        $scope.categoriesArray = response.data;
+      });
 
-    dataService.getFoodItems(function(response){
-      $scope.foodItems = response.data;
-      console.log($scope.foodItems)
-    });
+      dataService.getFoodItems(function(response){
+        $scope.foodItems = response.data;
+      });
+    }
 
   })
 
