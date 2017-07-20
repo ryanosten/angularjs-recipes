@@ -17,10 +17,11 @@ var app = angular.module('app', ['ngRoute'])
     });
 
     $scope.delete = function(recipe){
-      let index = $scope.recipesFiltered.indexOf(recipe);
-      $scope.recipesFiltered.splice(recipe, 1);
-
-      dataService.deleteRecipe(recipe, function(response){});
+      if(confirm('Are you sure you want to delete this recipe?') === true){
+        let index = $scope.recipesFiltered.indexOf(recipe);
+        $scope.recipesFiltered.splice(recipe, 1);
+        dataService.deleteRecipe(recipe, function(response){});
+      };
     };
     /*
     $scope.viewRecipe = function(id){
@@ -53,8 +54,12 @@ var app = angular.module('app', ['ngRoute'])
       dataService.getFoodItems(function(response){
         $scope.foodItems = response.data;
       });
-    }
 
+      $scope.updateRecipe = function(recipe){
+        let id = recipe._id;
+        dataService.updateRecipe(id, recipe);
+      }
+    }
   })
 
 
@@ -85,9 +90,8 @@ var app = angular.module('app', ['ngRoute'])
         .then(callback)
     }
 
-    this.updateRecipe = function(callback){
-      $http.put('/api/recipes/{id}')
-        .then(callback)
+    this.updateRecipe = function(id, payload){
+      $http.put(`/api/recipes/${id}`, payload)
     }
 
     this.addRecipe = function(callback){
