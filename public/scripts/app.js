@@ -59,6 +59,14 @@ var app = angular.module('app', ['ngRoute'])
         let id = recipe._id;
         dataService.updateRecipe(id, recipe);
       }
+
+      $scope.addIngredient = function(){
+        let ingredient_arr = document.getElementsByClassName("ingredient-row");
+        let last_ingredient = ingredient_arr[ingredient_arr.length - 1];
+        let new_ingredient = last_ingredient.cloneNode(true);
+        last_ingredient.parentNode.insertBefore(new_ingredient, last_ingredient.nextSibling);
+        console.log(new_ingredient);
+      }
     }
   })
 
@@ -103,5 +111,6 @@ var app = angular.module('app', ['ngRoute'])
       $http.delete(`/api/recipes/${id}`)
         .then(callback)
     }
+    //test
 
   })
