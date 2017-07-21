@@ -37,27 +37,6 @@
   <a href="#">
     <div class="grid-70">
       <p>{{recipe.name}}
-        <!--
-        <h3>{{recipe.name}}</h3>
-        Description: {{recipe.description}}
-        <br/>
-        Category: {{recipe.category}}
-        <br/>
-        Prep Time: {{recipe.prepTime}}
-        <br/>
-        Cook Time: {{recipe.cookTime}}
-        <br/>
-        <h4>Ingredients</h4>
-        <div ng-repeat="ingredient in recipe.ingredients">
-          {{ingredient.foodItem}}
-          {{ingredient.condition}}
-          {{ingredient.amount}}
-        </div>
-        <h4>Steps</h4>
-        <div ng-repeat="step in recipe.steps">
-          {{step.description}}
-        </div>
-        -->
 
         <!-- TODO Add binding expressions here in order to
           display information about the recipe. -->
@@ -74,7 +53,7 @@
           <a href="/#!/edit/{{recipe._id}}" ng-click="viewRecipe(recipe._id)"> <img src="images/edit.svg" height="12px"> Edit </a>
           <!-- TODO Add a directive to this anchor element so that you can
             delete the recipe when the user clicks on the 'Delete' link. -->
-          <a ng-click="delete(recipe._id)" class="no-action-link"> <img src="images/delete.svg" height="12px"> Delete </a>
+          <a ng-click="delete($index, recipe._id)" class="no-action-link"> <img src="images/delete.svg" height="12px"> Delete </a>
         </p>
       </div>
     </div>

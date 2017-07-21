@@ -16,21 +16,14 @@ var app = angular.module('app', ['ngRoute'])
       $scope.recipesFiltered = response.data;
     });
 
-    $scope.delete = function(recipe){
+    $scope.delete = function(index, recipe){
       if(confirm('Are you sure you want to delete this recipe?') === true){
-        let index = $scope.recipesFiltered.indexOf(recipe);
-        $scope.recipesFiltered.splice(recipe, 1);
-        dataService.deleteRecipe(recipe, function(response){});
+        $scope.recipesFiltered.splice(index, 1)
+        dataService.deleteRecipe(recipe);
+
       };
     };
-    /*
-    $scope.viewRecipe = function(id){
-      dataService.getRecipe(id, function(response){
-        $scope.recipeDetail = response.data;
-      })
-      console.log(id);
-    };
-    */
+
   })
 
 
@@ -143,9 +136,8 @@ var app = angular.module('app', ['ngRoute'])
       $http.post('/api/recipes', payload)
     }
 
-    this.deleteRecipe = function(id, callback){
+    this.deleteRecipe = function(id){
       $http.delete(`/api/recipes/${id}`)
-        .then(callback)
     }
 
   })
