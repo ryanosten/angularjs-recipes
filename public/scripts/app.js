@@ -47,27 +47,64 @@ var app = angular.module('app', ['ngRoute'])
         $scope.recipe = response.data;
       });
 
-      dataService.getCategories(function(response){
-        $scope.categoriesArray = response.data;
-      });
-
-      dataService.getFoodItems(function(response){
-        $scope.foodItems = response.data;
-      });
-
       $scope.updateRecipe = function(recipe){
         let id = recipe._id;
         dataService.updateRecipe(id, recipe);
       }
 
-      $scope.addIngredient = function(){
-        let ingredient_arr = document.getElementsByClassName("ingredient-row");
-        let last_ingredient = ingredient_arr[ingredient_arr.length - 1];
-        let new_ingredient = last_ingredient.cloneNode(true);
-        last_ingredient.parentNode.insertBefore(new_ingredient, last_ingredient.nextSibling);
-        console.log(new_ingredient);
+    } else if ($location.url() === '/add') {
+
+      $scope.recipe = {
+        name: "",
+        description: "",
+        category: "",
+        prepTime: 0,
+        cookTime: 0,
+        ingredients: [
+          {
+            foodItem: "",
+            condition: "",
+            amount: 0
+          }
+        ],
+        steps: [
+          {
+            description: ""
+          }
+        ]
       }
+
+      $scope.updateRecipe = function(recipe){
+        dataService.addRecipe(recipe);
+      }
+
     }
+
+    dataService.getCategories(function(response){
+      $scope.categoriesArray = response.data;
+    });
+
+    dataService.getFoodItems(function(response){
+      $scope.foodItems = response.data;
+    });
+
+    $scope.addIngredient = function(){
+
+      let ingredient_obj = {
+        foodItem: "",
+        condition: "",
+        amount: ""
+      }
+
+      $scope.recipe.ingredients.push(ingredient_obj);
+
+    }
+
+    $scope.addSteps = function(){
+      let steps_obj = {description: ""}
+      $scope.recipe.steps.push(steps_obj);
+    }
+
   })
 
 
@@ -102,15 +139,13 @@ var app = angular.module('app', ['ngRoute'])
       $http.put(`/api/recipes/${id}`, payload)
     }
 
-    this.addRecipe = function(callback){
-      $http.post('/api/recipes')
-        .then(callback)
+    this.addRecipe = function(payload){
+      $http.post('/api/recipes', payload)
     }
 
     this.deleteRecipe = function(id, callback){
       $http.delete(`/api/recipes/${id}`)
         .then(callback)
     }
-    //test
 
   })
