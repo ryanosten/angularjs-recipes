@@ -93,10 +93,18 @@ var app = angular.module('app', ['ngRoute'])
 
     }
 
+    $scope.deleteIngredient = function(index){
+      $scope.recipe.ingredients.splice(index, 1);
+    }
+
     $scope.addSteps = function(){
       let steps_obj = {description: ""}
       $scope.recipe.steps.push(steps_obj);
     }
+
+    $scope.deleteSteps = function(index){
+      $scope.recipe.steps.splice(index, 1);
+    };
 
   })
 
